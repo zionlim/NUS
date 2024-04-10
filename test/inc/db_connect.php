@@ -4,8 +4,11 @@
     $password = "P@ssw0rd"; // Update with your Azure MySQL password
     $databaseName = "dg01"; // Update with your Azure MySQL database name
 
-    // Establishing the connection
-    $conn = new mysqli($serverName, $username, $password, $databaseName);
+	$conn = mysqli_init();
+	
+	mysqli_ssl_set($conn,NULL,NULL, "/var/www/html/DigiCertGlobalRootG2.crt.pem", NULL, NULL);
+	
+	mysqli_real_connect($conn, $serverName, $username, $password, $databaseName, 3306, NULL, MYSQLI_CLIENT_SSL);
 
     // Checking the connection
     if ($conn->connect_error) {
